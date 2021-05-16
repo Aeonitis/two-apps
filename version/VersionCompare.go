@@ -8,6 +8,7 @@ import (
 	"log"
 	"os"
 	"github.com/blang/semver/v4"
+	"strconv"
 	"strings"
 )
 
@@ -112,8 +113,8 @@ func compareEachElementInSlices(sliceA, sliceB []string) int {
 
 	for index := range sliceA {
 		log.Println("Comparing at index:", index)
-		elementOfA := sliceA[index]
-		elementOfB := sliceB[index]
+		elementOfA := intFromString(sliceA[index])
+		elementOfB := intFromString(sliceB[index])
 
 		// Return results before end of permutation if possible
 		if elementOfA > elementOfB {
@@ -131,6 +132,20 @@ func compareEachElementInSlices(sliceA, sliceB []string) int {
 }
 
 /**
+intFromString Convert string to int
+*/
+func intFromString(stringToConvert string) int {
+	parsedInteger, err := strconv.Atoi(stringToConvert)
+
+	// Throw error if it exists
+	if err != nil {
+		log.Fatal("ERROR->", "Trouble found converting non-digit: ", stringToConvert)
+	}
+	return parsedInteger
+}
+
+/**
+* compareSemVer some 'quick-usage' code I found on the library page
 * Via SemVer library For semantic versions, e.g. 1.0.0-beta with Major.Minor.Patch
 * Usage: go run VersionCompare.go 1.2.0 1.0.0-beta
  */
