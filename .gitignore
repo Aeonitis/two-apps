@@ -29,3 +29,5 @@ math/gradle/wrapper/gradle-wrapper.jar
 math/gradle/wrapper/gradle-wrapper.jar
 math/gradle/wrapper/gradle-wrapper.jar
 .DS_Store
+*.iml
+*.xml
