@@ -1,0 +1,47 @@
+plugins {
+	id 'org.springframework.boot' version '2.4.5'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+}
+
+group = 'com.calc'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	// Spring framework for web functionality
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	// Health check functionality to probably deploy app and can display status for devops
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+	// Guava library for Quantiles calculation
+	implementation("com.google.guava:guava:30.1.1-jre")
+
+	// Lombok to reduce boilerplate code and increase readability
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+
+	// Validator dependency for easy input validation
+	implementation 'org.hibernate.validator:hibernate-validator'
+
+	// Testing dependency
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	// Unit test library
+	implementation 'junit:junit:4.12'
+}
+
+test {
+	useJUnitPlatform()
+}

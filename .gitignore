@@ -21,3 +21,11 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+*.bat
+*.jar
+math/gradlew
+math/gradle/wrapper/gradle-wrapper.properties
+math/gradle/wrapper/gradle-wrapper.jar
+math/gradle/wrapper/gradle-wrapper.jar
+math/gradle/wrapper/gradle-wrapper.jar
+.DS_Store
