@@ -4,10 +4,23 @@ package main
 Pre-requisite: go mod download github.com/blang/semver/v4
 */
 import (
+	"fmt"
 	"log"
 	"os"
 	"github.com/blang/semver/v4"
 	"strings"
+)
+
+/**
+Results to return
+If version1 > version2 return 1
+If version1 < version2 return -1
+otherwise return 0
+*/
+const (
+	ResultVersionAIsMoreThanVersionB = 1
+	ResultVersionAIsLessThanVersionB = -1
+	ResultVersionAIsEqualToVersionB  = 0
 )
 
 /**
@@ -27,7 +40,11 @@ func main() {
 	versionA := os.Args[1]
 	versionB := os.Args[2]
 
-	compareVersion(versionA, versionB)
+	comparisonResult := compareVersion(versionA, versionB)
+
+	fmt.Println("----------------- RESULT -----------------")
+	fmt.Println(comparisonResult)
+	fmt.Println("------------------------------------------")
 	//compareSemVer(versionA, versionB)
 }
 
@@ -65,7 +82,7 @@ func compareVersion(versionA, versionB string) int {
 
 	// Should return compared result on the equalized element size versions
 
-	return 0
+	return compareEachDigitInSlices(versionASlice, versionBSlice)
 }
 
 /**
@@ -80,11 +97,37 @@ func appendDelimitedZeroesSuffixToSlice(sliceToAppend []string, zeroesToAdd int)
 	for i := 0; i < zeroesToAdd; i++ {
 		suffixOfZeroes = append(suffixOfZeroes, Zero)
 	}
-	
+
 	log.Println("Appending", sliceToAppend, "with suffixOfZeroes:", suffixOfZeroes)
 	sliceToAppend = append(sliceToAppend, suffixOfZeroes...)
 	log.Println("Result after appending:", sliceToAppend)
 	return sliceToAppend
+}
+
+/**
+compareEachDigitInSlices Assuming both lengths are equal, compare each version iterating from left to right
+*/
+func compareEachDigitInSlices(sliceA, sliceB []string) int {
+	log.Println("Comparison of equal length slices:", sliceA, sliceB)
+
+	for index := range sliceA {
+		log.Println("Comparing at index:", index)
+		elementOfA := sliceA[index]
+		elementOfB := sliceB[index]
+
+		// Return results before end of permutation if possible
+		if elementOfA > elementOfB {
+			log.Println("RESULT", "A>B")
+			return ResultVersionAIsMoreThanVersionB
+		} else if elementOfA < elementOfB {
+			log.Println("RESULT", "A<B")
+			return ResultVersionAIsLessThanVersionB
+		} else {
+			log.Println("\tBoth are equal at index", index, ", resuming to next element...")
+		}
+	}
+
+	return ResultVersionAIsEqualToVersionB
 }
 
 /**
