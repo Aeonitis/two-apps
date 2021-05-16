@@ -55,8 +55,10 @@ func compareVersion(versionA, versionB string) int {
 		// Add zeroes on the slice with smaller length either way
 		if lengthOfVersionA > lengthOfVersionB {
 			log.Println("Smaller slice versionB nominated for extension:", versionBSlice)
+			versionBSlice = appendDelimitedZeroesSuffixToSlice(versionBSlice, lengthOfVersionA-lengthOfVersionB)
 		} else {
 			log.Println("Smaller slice versionA nominated for extension:", versionASlice)
+			versionASlice = appendDelimitedZeroesSuffixToSlice(versionASlice, lengthOfVersionB-lengthOfVersionA)
 		}
 
 	}
@@ -64,6 +66,25 @@ func compareVersion(versionA, versionB string) int {
 	// Should return compared result on the equalized element size versions
 
 	return 0
+}
+
+/**
+appendDelimitedZeroesSuffixToSlice takes the smaller slice and add zeroes to equalize them
+*/
+func appendDelimitedZeroesSuffixToSlice(sliceToAppend []string, zeroesToAdd int) []string {
+
+	Zero := "0"
+	var suffixOfZeroes []string
+
+	// Create a slice of zeroes
+	for i := 0; i < zeroesToAdd; i++ {
+		suffixOfZeroes = append(suffixOfZeroes, Zero)
+	}
+	
+	log.Println("Appending", sliceToAppend, "with suffixOfZeroes:", suffixOfZeroes)
+	sliceToAppend = append(sliceToAppend, suffixOfZeroes...)
+	log.Println("Result after appending:", sliceToAppend)
+	return sliceToAppend
 }
 
 /**
