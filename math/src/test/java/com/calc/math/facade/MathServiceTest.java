@@ -29,8 +29,4 @@ class MathServiceTest {
         String EXPECTED_RESULT = "1.0";
         assertEquals(EXPECTED_RESULT, mockMathService.calculateMinimum(listOfValidDoubles));
     }
-
-    @Test
-    void calculateMinimum() {
-    }
 }
