@@ -7,6 +7,7 @@ import (
 	"log"
 	"os"
 	"github.com/blang/semver/v4"
+	"strings"
 )
 
 /**
@@ -26,14 +27,43 @@ func main() {
 	versionA := os.Args[1]
 	versionB := os.Args[2]
 
-	compareSemVer(versionA, versionB)
+	compareVersion(versionA, versionB)
+	//compareSemVer(versionA, versionB)
 }
 
 /**
 * Compare my way
 * Usage: go run VersionCompare.go 1.2 1.2.9.9.9.9
  */
-func compareVersions(versionA, versionB string) {
+func compareVersion(versionA, versionB string) int {
+
+	// Split strings into string slice/list
+	DotDelimiter := "."
+
+	versionASlice := strings.Split(versionA, DotDelimiter)
+	lengthOfVersionA := len(versionASlice)
+	log.Println("versionA:",versionASlice, "Length:", lengthOfVersionA)
+
+	versionBSlice := strings.Split(versionB, DotDelimiter)
+	lengthOfVersionB := len(versionBSlice)
+	log.Println("versionB:",versionBSlice, "Length:", lengthOfVersionB)
+
+	// Equalize version elements for fair comparisons
+	if lengthOfVersionA != lengthOfVersionB {
+		log.Println("Unequal element length in both slices. Equalizing lengths...")
+
+		// Add zeroes on the slice with smaller length either way
+		if lengthOfVersionA > lengthOfVersionB {
+			log.Println("Smaller slice versionB nominated for extension:", versionBSlice)
+		} else {
+			log.Println("Smaller slice versionA nominated for extension:", versionASlice)
+		}
+
+	}
+
+	// Should return compared result on the equalized element size versions
+
+	return 0
 }
 
 /**
