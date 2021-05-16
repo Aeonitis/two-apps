@@ -45,7 +45,7 @@ func main() {
 
 	fmt.Println("RESULT --------------")
 	fmt.Println(comparisonResult)
-	fmt.Println("------------------------------------------")
+	
 	//compareSemVer(versionA, versionB)
 }
 
@@ -72,10 +72,10 @@ func compareVersion(versionA, versionB string) int {
 
 		// Add zeroes on the slice with smaller length either way
 		if lengthOfVersionA > lengthOfVersionB {
-			log.Println("Smaller slice versionB nominated for extension:", versionBSlice)
+			log.Println("Smaller length slice versionB nominated for extension:", versionBSlice)
 			versionBSlice = appendDelimitedZeroesSuffixToSlice(versionBSlice, lengthOfVersionA-lengthOfVersionB)
 		} else {
-			log.Println("Smaller slice versionA nominated for extension:", versionASlice)
+			log.Println("Smaller length slice versionA nominated for extension:", versionASlice)
 			versionASlice = appendDelimitedZeroesSuffixToSlice(versionASlice, lengthOfVersionB-lengthOfVersionA)
 		}
 
@@ -112,9 +112,9 @@ func compareEachElementInSlices(sliceA, sliceB []string) int {
 	log.Println("Comparison of equal length slices:", sliceA, sliceB)
 
 	for index := range sliceA {
-		log.Println("Comparing at index:", index)
 		elementOfA := intFromString(sliceA[index])
 		elementOfB := intFromString(sliceB[index])
+		log.Println("Comparing at index:", index, "Elements: ", elementOfA, " & ", elementOfB)
 
 		// Return results before end of permutation if possible
 		if elementOfA > elementOfB {
