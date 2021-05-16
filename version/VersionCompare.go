@@ -36,20 +36,20 @@ Here is an example of version numbers ordering: 0.1 < 1.1 < 1.2 < 1.2.9.9.9.9 < 
 
 func main() {
 
-	// Take first two arguments
+	// Take first two console arguments
 	versionA := os.Args[1]
 	versionB := os.Args[2]
 
 	comparisonResult := compareVersion(versionA, versionB)
 
-	fmt.Println("----------------- RESULT -----------------")
+	fmt.Println("RESULT --------------")
 	fmt.Println(comparisonResult)
 	fmt.Println("------------------------------------------")
 	//compareSemVer(versionA, versionB)
 }
 
 /**
-* Compare my way
+* compareVersion Compare my way, split, then equalize both versions by comparing per element
 * Usage: go run VersionCompare.go 1.2 1.2.9.9.9.9
  */
 func compareVersion(versionA, versionB string) int {
@@ -59,11 +59,11 @@ func compareVersion(versionA, versionB string) int {
 
 	versionASlice := strings.Split(versionA, DotDelimiter)
 	lengthOfVersionA := len(versionASlice)
-	log.Println("versionA:",versionASlice, "Length:", lengthOfVersionA)
+	log.Println("versionA:", versionASlice, "Length:", lengthOfVersionA)
 
 	versionBSlice := strings.Split(versionB, DotDelimiter)
 	lengthOfVersionB := len(versionBSlice)
-	log.Println("versionB:",versionBSlice, "Length:", lengthOfVersionB)
+	log.Println("versionB:", versionBSlice, "Length:", lengthOfVersionB)
 
 	// Equalize version elements for fair comparisons
 	if lengthOfVersionA != lengthOfVersionB {
@@ -81,8 +81,7 @@ func compareVersion(versionA, versionB string) int {
 	}
 
 	// Should return compared result on the equalized element size versions
-
-	return compareEachDigitInSlices(versionASlice, versionBSlice)
+	return compareEachElementInSlices(versionASlice, versionBSlice)
 }
 
 /**
@@ -105,9 +104,10 @@ func appendDelimitedZeroesSuffixToSlice(sliceToAppend []string, zeroesToAdd int)
 }
 
 /**
-compareEachDigitInSlices Assuming both lengths are equal, compare each version iterating from left to right
+compareEachElementInSlices Assuming both lengths are equal, compare each version iterating from left to right
+Note: Can improve by converting string slice to digit slices instead
 */
-func compareEachDigitInSlices(sliceA, sliceB []string) int {
+func compareEachElementInSlices(sliceA, sliceB []string) int {
 	log.Println("Comparison of equal length slices:", sliceA, sliceB)
 
 	for index := range sliceA {
@@ -117,16 +117,16 @@ func compareEachDigitInSlices(sliceA, sliceB []string) int {
 
 		// Return results before end of permutation if possible
 		if elementOfA > elementOfB {
-			log.Println("RESULT", "A>B")
+			log.Println("RESULT:", "A>B")
 			return ResultVersionAIsMoreThanVersionB
 		} else if elementOfA < elementOfB {
-			log.Println("RESULT", "A<B")
+			log.Println("RESULT:", "A<B")
 			return ResultVersionAIsLessThanVersionB
 		} else {
 			log.Println("\tBoth are equal at index", index, ", resuming to next element...")
 		}
 	}
-
+	log.Println("RESULT:", "A==B")
 	return ResultVersionAIsEqualToVersionB
 }
 
