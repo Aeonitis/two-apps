@@ -17,20 +17,17 @@ import java.util.Date;
 public class MathExceptionHandler {
 
     /**
-     * Catch all checked exceptions and respond with just a bad request
-     * <p>
-     * Best practice would be to catch exception subtypes instead of an Internal Server Error
+     * Catch all checked exceptions
      *
      * @param exception exception caught within the application at runtime
      * @param request   web request at time the checked exception is thrown
      * @return Response error to user
      */
     @ExceptionHandler(Exception.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ResponseEntity handleAllExceptions(Exception exception, WebRequest request) {
 
         log.error(request.toString(), exception);
-//        return buildErrorResponse(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         return buildErrorResponse(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 

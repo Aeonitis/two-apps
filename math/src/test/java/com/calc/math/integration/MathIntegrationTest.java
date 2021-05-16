@@ -17,12 +17,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 public class MathIntegrationTest {
+
     public static final String ENDPOINT_BASE = "http://localhost:8080";
     public static final String ENDPOINT_MAX = ENDPOINT_BASE + "/max";
     public static final String ENDPOINT_MIN = ENDPOINT_BASE + "/min";
     public static final String ENDPOINT_AVG = ENDPOINT_BASE + "/avg";
     public static final String ENDPOINT_MEDIAN = ENDPOINT_BASE + "/median";
     public static final String ENDPOINT_PERCENTILE = ENDPOINT_BASE + "/percentile";
+
+    public static final String MESSAGE_INCONGRUENT_ELEMENT_QUANTITY = "The quantity of elements are unequal to amount of elements in the list";
 
     @Autowired
     private MockMvc mockMvc;
@@ -43,7 +46,8 @@ public class MathIntegrationTest {
                 .param("numbers", "6, 6.25")
                 .param("n", "1"))
                 .andDo(print())
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string(MESSAGE_INCONGRUENT_ELEMENT_QUANTITY));
     }
 
     @Test
@@ -52,7 +56,8 @@ public class MathIntegrationTest {
                 .param("numbers", "6, 6.25")
                 .param("n", "11"))
                 .andDo(print())
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string(MESSAGE_INCONGRUENT_ELEMENT_QUANTITY));
     }
 
     @Test
@@ -71,7 +76,8 @@ public class MathIntegrationTest {
                 .param("numbers", "6, 6.25")
                 .param("n", "1"))
                 .andDo(print())
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string(MESSAGE_INCONGRUENT_ELEMENT_QUANTITY));
     }
 
     @Test
@@ -90,7 +96,8 @@ public class MathIntegrationTest {
                 .param("numbers", "1, 2, 4.5")
                 .param("n", "1"))
                 .andDo(print())
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string(MESSAGE_INCONGRUENT_ELEMENT_QUANTITY));
     }
 
 
@@ -101,6 +108,11 @@ public class MathIntegrationTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().string("2.0"));
+    }
+
+    @Test
+    public void givenGetRequestForMedianEndpointWhenListIsEmptyThenFails() {
+        
     }
 
     @Test
