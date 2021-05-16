@@ -4,6 +4,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static com.google.common.math.Quantiles.median;
+import static com.google.common.math.Quantiles.percentiles;
+
 /**
  * Implementation of the service interface
  */
@@ -23,21 +26,25 @@ public class MathServiceImpl implements MathService {
 
     @Override
     public String calculateMaximum(List<Double> numbersToCalculate) {
-        return null;
+        return String.valueOf(numbersToCalculate.stream()
+                .mapToDouble(d -> d)
+                .max().getAsDouble());
     }
 
     @Override
     public String calculateAverage(List<Double> numbersToCalculate) {
-        return null;
+        return String.valueOf(numbersToCalculate.stream()
+                .mapToDouble(d -> d)
+                .average().getAsDouble());
     }
 
     @Override
     public String calculateMedian(List<Double> numbersToCalculate) {
-        return null;
+        return String.valueOf(median().compute(numbersToCalculate));
     }
 
     @Override
-    public String calculatePercentile(List<Double> numbersToCalculate, Integer percentile) {
-        return null;
+    public String calculatePercentile(List<Double> numbersToCalculate, Integer k) {
+        return String.valueOf(percentiles().index(k).compute(numbersToCalculate));
     }
 }

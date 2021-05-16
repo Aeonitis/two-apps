@@ -41,7 +41,7 @@ public class MathExceptionHandler {
      * @param httpStatus   Http Status code of response
      * @return a custom ResponseEntity tailored for this app
      */
-    private ResponseEntity buildErrorResponse(String errorMessage, HttpStatus httpStatus) {
+    private ResponseEntity<MathError> buildErrorResponse(String errorMessage, HttpStatus httpStatus) {
 
         // final, local variable to convey developer's intent
         final MathError errorResponse = MathError.builder()
@@ -50,8 +50,12 @@ public class MathExceptionHandler {
                 .timestamp(Date.from(Instant.now()))
                 .build();
 
-        log.info("Built Error response: " + errorResponse);
         return new ResponseEntity<>(errorResponse, httpStatus);
+    }
+
+    public static ResponseEntity<String> buildBadRequestResponseEntity(String messageToUser) {
+        return ResponseEntity.badRequest()
+                .body(messageToUser);
     }
 }
 
