@@ -19,10 +19,20 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	// Spring framework for web functionality
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	// Health check functionality to probably deploy app and can display status for devops
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+	// Lombok to reduce boilerplate code and increase readability
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
+
+	// Validator dependency for easy input validation
+	implementation 'org.hibernate.validator:hibernate-validator'
+
+	// Testing dependency
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
